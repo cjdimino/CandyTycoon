@@ -6,6 +6,8 @@ public class Cook extends Process {
 	
 	public Cook(){
 		
+		
+		
 	}
 	
 }
