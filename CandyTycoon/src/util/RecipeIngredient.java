@@ -6,18 +6,29 @@ public class RecipeIngredient {
 	private int proportion;
 	
 	
-	public RecipeIngredient(Ingredient ingIn, int proportionIn){
+	public RecipeIngredient(Ingredient ingIn){
 		ing = ingIn;
-		proportion = 1;
+		setProportion(1);
 		
 		
 		
 	}
 	
 	public void incProportion(){
-		proportion ++;
+		setProportion(getProportion() + 1);
+	}
+
+	public int getProportion() {
+		return proportion;
+	}
+
+	public void setProportion(int proportion) {
+		this.proportion = proportion;
 	}
 	
+	public String getName(){
+		return this.ing.toString();
+	}
 	
 	
 }

@@ -20,9 +20,9 @@ public class Ingredient {
 		setName(nameIn);
 			
 	}
-	public boolean equals(Ingredient ing){
+	public String toString(){
 		
-		return this.getName().equals(ing.getName());
+		return this.getName();
 		
 	}
 	
