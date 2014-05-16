@@ -30,6 +30,8 @@ public class Test{
 	    try {
 	        appgc = new AppGameContainer(new CandyGame());
 	        appgc.setDisplayMode(800, 600, false);
+	        appgc.setTargetFrameRate(60);
+	        appgc.setShowFPS(false);
 	        appgc.setTitle("TestApp");
 	        appgc.start();
 	    }
