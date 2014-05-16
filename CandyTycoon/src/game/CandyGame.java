@@ -129,18 +129,10 @@ public class CandyGame extends BasicGame implements Game{
 	}
 
 
-	public void update(AppGameContainer container, int delta)
+	public void update(GameContainer container, int delta)
 			throws SlickException {
 		// TODO Auto-generated method stub
-		   if(Display.getWidth() != container.getWidth() || Display.getHeight() != container.getHeight()) {
-		        try {
-		            container.setDisplayMode(Display.getWidth(), Display.getHeight(), false);
-		            container.reinit();
-		        } catch(Exception e) {
-		            e.printStackTrace();
-		        }
-		    }
-		handleInputs();
+
 
 		
 	}
@@ -152,12 +144,7 @@ public class CandyGame extends BasicGame implements Game{
 	}
 
 
-	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 
