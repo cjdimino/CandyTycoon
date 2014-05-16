@@ -12,8 +12,9 @@ public class Test {
 
 	/**
 	 * @param args
+	 * @throws LWJGLException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LWJGLException {
 		// TODO Auto-generated method stub
 		
 		Game game = new Game();

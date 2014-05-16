@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -18,6 +19,8 @@ public class Game {
 	Player player;
 	private TrueTypeFont font;
 	private Font testFont = new Font("TimesRoman",Font.BOLD, 24);
+	boolean toggle = false;
+
 	
 	public Game(){
 		player = new Player();
@@ -34,7 +37,7 @@ public class Game {
 		this.font = awtFont;
 	}
 	
-	public void start(){
+	public void start() throws LWJGLException{
 		initGL(800,600);
 		init();
 		while(true){
@@ -84,10 +87,15 @@ public class Game {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		}
 	
-	public void init() {
+	public void init() throws LWJGLException {
 		// load a default java font
-		
+		System.setProperty("org.lwjgl.input.Mouse.allowNegativeMouseCoords", "true");
+		Mouse.create();
+
 		try {
+			Keyboard.create();
+
+			
 			InputStream inputStream	= getClass().getResourceAsStream("/resources/Arial.ttf");
 	 
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
@@ -97,26 +105,18 @@ public class Game {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-
 		 
 		}
-	public void render() {
+	
+	
+	public void render() throws LWJGLException {
 		
-		if(Keyboard.getEventKey() == Keyboard.KEY_1){
-			font.drawString(100, 50, "THE LIGHTWEIGHT JAVA GAMES LIBRARY", Color.white);
-
-			try {
-				Display.setFullscreen(!Display.isFullscreen());
-			} catch (LWJGLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			
-		}
-		}
+			font.drawString(100, 50, "x = " + Mouse.getX() + "y = " + Mouse.getY(), Color.white);
+	}
+}
+	
 	
 
 
 
-}
+
