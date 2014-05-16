@@ -45,7 +45,7 @@ public class Game {
 			render();
 			Display.update();
 
-			Display.sync(100);
+			Display.sync(60);
 			
 			
 			if (Display.isCloseRequested()){
@@ -114,12 +114,21 @@ public class Game {
 		handleInputs();
 		if(debugToggle){
 			if(Mouse.isInsideWindow()){
-			font.drawString(20, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.black);
+				font.drawString(20, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.black);
 			}
 			else{
 				font.drawString(20, 20, "Out", Color.black);
 			}
+			if(Mouse.isButtonDown(0)){
+				if(Mouse.isInsideWindow()){
+					font.drawString(20, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.red);
+				}
+				else{
+					font.drawString(20, 20, "Out", Color.black);
+				}
+			}
 		}
+		
 	}
 	
 	public void handleInputs(){
