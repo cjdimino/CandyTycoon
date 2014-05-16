@@ -1,6 +1,8 @@
 package game;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.lwjgl.LWJGLException;
@@ -9,28 +11,30 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 
-public class CandyGame {
-	
-	
+public class CandyGame extends BasicGame implements Game{
+		
 	private boolean antiAlias = true;
 
-	
+	Input input = new Input(Display.getHeight());
 	Player player;
 	private TrueTypeFont font;
-	private Font testFont = new Font("TimesRoman",Font.BOLD, 24);
+	private Font testFont = new Font("TimesRoman",Font.BOLD, 12);
 	boolean debugToggle = false;
 
 	
 	public CandyGame(){
+		super("TestGame");
 		player = new Player();
-
 	}
 
 
@@ -43,123 +47,116 @@ public class CandyGame {
 		this.font = awtFont;
 	}
 	
-	public void start() throws LWJGLException {
-		initGL(800,600);
-		init();
-		while(true){
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-			render();
-			Display.update();
-
-			Display.sync(60);
-			
-			
-			if (Display.isCloseRequested()){
-				Display.destroy();
-				System.exit(0);
-				
-			}
-			
-		}
-	}
-	private void initGL(int width, int height) {
-		try {
-		Display.setDisplayMode(new DisplayMode(width,height));
-		Display.create();
-		Display.setVSyncEnabled(true);
-		Display.setResizable(true);
-		} catch (LWJGLException e) {
-		e.printStackTrace();
-		System.exit(0);
-		}
-		 
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glShadeModel(GL11.GL_SMOOTH);       
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_LIGHTING);                   
-		 
-		GL11.glClearColor(1f, 1f, 1f, 0.0f);               
-		GL11.glClearDepth(1);                                      
-		 
-		
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		 
-		GL11.glViewport(0,0,width,height);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		 
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, width, height, 0, 1, -1);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		}
-	
-	public void init() throws LWJGLException  {
-		// load a default java font
-		Mouse.create();
-		Keyboard.enableRepeatEvents(false);
-		System.out.println(Display.getDisplayMode().isFullscreenCapable());
-
-		try {
-			Keyboard.create();
-
-			
-			InputStream inputStream	= getClass().getResourceAsStream("/resources/Arial.ttf");
-	 
-			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont2 = awtFont2.deriveFont(24f); // set font size
-			font = new TrueTypeFont(awtFont2, false);
-	 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		 
-		}
-	
-	
-	public void render() {
-
-		handleInputs();
-		redrawContents();
-		if(debugToggle){
-			if(Mouse.isInsideWindow()){
-				font.drawString(0, 0, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.black);
-			}
-			else{
-				font.drawString(0, 0, "Out", Color.black);
-			}
-			if(Mouse.isButtonDown(0)){
-				if(Mouse.isInsideWindow()){
-					font.drawString(0, 0, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.red);
-				}
-				else{
-					font.drawString(0, 0, "Out", Color.black);
-				}
-			}
-		}
-		
-	}
-	
 	public void handleInputs(){
 		
-		while (Keyboard.next()) {
-			if (Keyboard.getEventKeyState()) {
-				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {
-					debugToggle = !debugToggle;
-				}
-			}
+		if (input.isKeyPressed(input.KEY_F1)) {
+			debugToggle = !debugToggle;
+			System.out.println("YES");
 		}
 		
 	}
 	public void redrawContents(){
 		if (Display.wasResized()) {
-
-		            
-		    GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-		    
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		}
-		//GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
+	}
+
+
+	@Override
+	public boolean closeRequested() {
+		// TODO Auto-generated method stub
+		System.exit(0);
+		return false;
+	}
+
+
+	@Override
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void init(GameContainer container) throws SlickException {
+		// TODO Auto-generated method stub
+		
+		// load a default java font
+		try {
+			Mouse.create();
+			Keyboard.enableRepeatEvents(false);
+			System.out.println(Display.getDisplayMode().isFullscreenCapable());
+
+			Keyboard.create();
+			
+			InputStream inputStream	= getClass().getResourceAsStream("/resources/Arial.ttf");
+	 
+			Font awtFont2;
+			awtFont2 = testFont;
+			awtFont2 = awtFont2.deriveFont(24f); // set font size
+			font = new TrueTypeFont(awtFont2, false);
+	 
+		} catch (LWJGLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void render(GameContainer container, Graphics g)
+			throws SlickException {
+		// TODO Auto-generated method stub
+		if(debugToggle){
+
+			if(Mouse.isInsideWindow()){
+				font.drawString(0, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.white);
+			}
+			else{
+				font.drawString(0, 20, "Out", Color.white);
+			}
+			if(input.isMouseButtonDown(0)){
+				if(Mouse.isInsideWindow()){
+					font.drawString(0, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.red);
+				}
+				else{
+					font.drawString(0, 20, "Out", Color.red);
+				}
+			}
+		}
+		
+	}
+
+
+	public void update(AppGameContainer container, int delta)
+			throws SlickException {
+		// TODO Auto-generated method stub
+		   if(Display.getWidth() != container.getWidth() || Display.getHeight() != container.getHeight()) {
+		        try {
+		            container.setDisplayMode(Display.getWidth(), Display.getHeight(), false);
+		            container.reinit();
+		        } catch(Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		handleInputs();
+
+		
+	}
+	
+	public void keyPressed(int key, char c){
+		switch (key){
+		case Input.KEY_F1:debugToggle = !debugToggle;break;
+		}
+	}
+
+
+	@Override
+	public void update(GameContainer container, int delta)
+			throws SlickException {
+		// TODO Auto-generated method stub
+		
 	}
 
 
