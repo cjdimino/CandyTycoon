@@ -4,7 +4,14 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="/Users/cjdimino/Downloads/lwjgl-2.9.1/jar/lwjgl.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="file:/Users/cjdimino/Downloads/lwjgl-2.9.1/doc/"/>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/cjdimino/Downloads/lwjgl-2.9.1/native/macosx"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/cjdimino/Downloads/slick/lib/slick.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Users/cjdimino/Downloads/slick/javadoc/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/cjdimino/Downloads/slick/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
