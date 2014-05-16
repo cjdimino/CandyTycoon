@@ -6,7 +6,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.Color;
 
-import game.Game;
+import game.CandyGame;
 
 public class Test {
 
@@ -17,7 +17,7 @@ public class Test {
 	public static void main(String[] args) throws LWJGLException {
 		// TODO Auto-generated method stub
 		
-		Game game = new Game();
+		CandyGame game = new CandyGame();
 		game.start();
 		
 	}

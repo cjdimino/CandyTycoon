@@ -10,9 +10,15 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Game;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 
-public class Game {
+public class CandyGame {
+	
+	
 	private boolean antiAlias = true;
 
 	
@@ -22,7 +28,7 @@ public class Game {
 	boolean debugToggle = false;
 
 	
-	public Game(){
+	public CandyGame(){
 		player = new Player();
 
 	}
@@ -37,7 +43,7 @@ public class Game {
 		this.font = awtFont;
 	}
 	
-	public void start() throws LWJGLException{
+	public void start() throws LWJGLException {
 		initGL(800,600);
 		init();
 		while(true){
@@ -88,10 +94,11 @@ public class Game {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		}
 	
-	public void init() throws LWJGLException {
+	public void init() throws LWJGLException  {
 		// load a default java font
 		Mouse.create();
 		Keyboard.enableRepeatEvents(false);
+		System.out.println(Display.getDisplayMode().isFullscreenCapable());
 
 		try {
 			Keyboard.create();
@@ -110,21 +117,23 @@ public class Game {
 		}
 	
 	
-	public void render() throws LWJGLException {
+	public void render() {
+
 		handleInputs();
+		redrawContents();
 		if(debugToggle){
 			if(Mouse.isInsideWindow()){
-				font.drawString(20, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.black);
+				font.drawString(0, 0, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.black);
 			}
 			else{
-				font.drawString(20, 20, "Out", Color.black);
+				font.drawString(0, 0, "Out", Color.black);
 			}
 			if(Mouse.isButtonDown(0)){
 				if(Mouse.isInsideWindow()){
-					font.drawString(20, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.red);
+					font.drawString(0, 0, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.red);
 				}
 				else{
-					font.drawString(20, 20, "Out", Color.black);
+					font.drawString(0, 0, "Out", Color.black);
 				}
 			}
 		}
@@ -142,6 +151,20 @@ public class Game {
 		}
 		
 	}
+	public void redrawContents(){
+		if (Display.wasResized()) {
+
+		            
+		    GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		    
+		}
+		//GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+
+	}
+
+
+
+
 }
 	
 	
