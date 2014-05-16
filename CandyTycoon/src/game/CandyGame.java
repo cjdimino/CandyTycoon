@@ -22,6 +22,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import states.Level1;
 import states.Menu;
 
 public class CandyGame extends StateBasedGame implements Game{
@@ -29,6 +30,8 @@ public class CandyGame extends StateBasedGame implements Game{
 
 	private boolean antiAlias = true;
 	public static final int menu = 0;
+	public static final int level1 = 1;
+
 
 
 	
@@ -36,6 +39,7 @@ public class CandyGame extends StateBasedGame implements Game{
 		super("TestGame");
 		player = new Player();
 		this.addState(new Menu(menu));
+		this.addState(new Level1(level1));
 		
 		
 		
@@ -60,6 +64,7 @@ public class CandyGame extends StateBasedGame implements Game{
 		// TODO Auto-generated method stub
 		
 		   this.getState(menu).init(container, this);
+		   this.getState(level1).init(container, this);
 
 		this.enterState(menu);
 	}
