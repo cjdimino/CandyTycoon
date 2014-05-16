@@ -17,7 +17,7 @@ public class Game {
 
 	
 	Player player;
-	private UnicodeFont font;
+	private TrueTypeFont font;
 	private Font testFont = new Font("TimesRoman",Font.BOLD, 24);
 	
 	public Game(){
@@ -26,12 +26,12 @@ public class Game {
 	}
 
 
-	public UnicodeFont getFont() {
+	public TrueTypeFont getFont() {
 		return font;
 	}
 
 
-	public void setAwtFont(UnicodeFont awtFont) {
+	public void setAwtFont(TrueTypeFont awtFont) {
 		this.font = awtFont;
 	}
 	
@@ -85,7 +85,18 @@ public class Game {
 	
 	public void init() {
 		// load a default java font
-		font = new UnicodeFont(testFont);
+		
+		try {
+			InputStream inputStream	= ResourceLoader.getResourceAsStream("Arial.ttf");
+	 
+			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+			awtFont2 = awtFont2.deriveFont(24f); // set font size
+			font = new TrueTypeFont(awtFont2, false);
+	 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+
 		 
 		}
 	public void render() {
