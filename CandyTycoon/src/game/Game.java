@@ -4,13 +4,12 @@ import java.awt.Font;
 import java.io.InputStream;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class Game {
 	private boolean antiAlias = true;
@@ -42,7 +41,9 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			render();
 			Display.update();
+
 			Display.sync(100);
+			
 			
 			if (Display.isCloseRequested()){
 				Display.destroy();
@@ -87,7 +88,7 @@ public class Game {
 		// load a default java font
 		
 		try {
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("Arial.ttf");
+			InputStream inputStream	= getClass().getResourceAsStream("/resources/Arial.ttf");
 	 
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(24f); // set font size
@@ -100,13 +101,22 @@ public class Game {
 		 
 		}
 	public void render() {
-		font.drawString(100, 50, "THE LIGHTWEIGHT JAVA GAMES LIBRARY", Color.white);
+		
+		if(Keyboard.getEventKey() == Keyboard.KEY_1){
+			font.drawString(100, 50, "THE LIGHTWEIGHT JAVA GAMES LIBRARY", Color.white);
+
+			try {
+				Display.setFullscreen(!Display.isFullscreen());
+			} catch (LWJGLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+		}
 		}
 	
-	public static void main(String[] argv) {
-		Game fontExample = new Game();
-		fontExample.start();
-		}
+
 
 
 }
