@@ -19,7 +19,7 @@ public class Game {
 	Player player;
 	private TrueTypeFont font;
 	private Font testFont = new Font("TimesRoman",Font.BOLD, 24);
-	boolean toggle = false;
+	boolean debugToggle = false;
 
 	
 	public Game(){
@@ -61,6 +61,7 @@ public class Game {
 		Display.setDisplayMode(new DisplayMode(width,height));
 		Display.create();
 		Display.setVSyncEnabled(true);
+		Display.setResizable(true);
 		} catch (LWJGLException e) {
 		e.printStackTrace();
 		System.exit(0);
@@ -71,7 +72,7 @@ public class Game {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDisable(GL11.GL_LIGHTING);                   
 		 
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);               
+		GL11.glClearColor(1f, 1f, 1f, 0.0f);               
 		GL11.glClearDepth(1);                                      
 		 
 		
@@ -89,8 +90,8 @@ public class Game {
 	
 	public void init() throws LWJGLException {
 		// load a default java font
-		System.setProperty("org.lwjgl.input.Mouse.allowNegativeMouseCoords", "true");
 		Mouse.create();
+		Keyboard.enableRepeatEvents(false);
 
 		try {
 			Keyboard.create();
@@ -110,8 +111,27 @@ public class Game {
 	
 	
 	public void render() throws LWJGLException {
+		handleInputs();
+		if(debugToggle){
+			if(Mouse.isInsideWindow()){
+			font.drawString(20, 20, "x = " + Mouse.getX() + " | y = " + Mouse.getY(), Color.black);
+			}
+			else{
+				font.drawString(20, 20, "Out", Color.black);
+			}
+		}
+	}
+	
+	public void handleInputs(){
 		
-			font.drawString(100, 50, "x = " + Mouse.getX() + "y = " + Mouse.getY(), Color.white);
+		while (Keyboard.next()) {
+			if (Keyboard.getEventKeyState()) {
+				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {
+					debugToggle = !debugToggle;
+				}
+			}
+		}
+		
 	}
 }
 	
