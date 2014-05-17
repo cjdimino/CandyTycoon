@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -22,10 +23,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import TWLSLick.TWLStateBasedGame;
+
 import states.Level1;
 import states.Menu;
 
-public class CandyGame extends StateBasedGame implements Game{
+public class CandyGame extends TWLStateBasedGame implements Game{
 	Player player;
 
 	private boolean antiAlias = true;
@@ -68,6 +71,18 @@ public class CandyGame extends StateBasedGame implements Game{
 
 		this.enterState(menu);
 	}
+
+    /**
+     * Implement this method and return the URL for the TWL theme.
+     * 
+     * @return the URL for the TWL theme. Must not be null.
+     */
+    @Override
+    protected URL getThemeURL() {
+        return CandyGame.class.getResource("ui/theme.xml");
+    }
+
+
 
 
 

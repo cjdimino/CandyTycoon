@@ -1,12 +1,9 @@
 package states;
 
 import game.CandyGame;
-import game.Player;
 
 import java.awt.Font;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -20,11 +17,15 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Menu extends BasicGameState implements GameState {
+import TWLSLick.BasicTWLGameState;
+
+import de.matthiasmann.twl.Button;
+
+public class Menu extends BasicTWLGameState implements GameState {
 	Input input = new Input(Display.getHeight());
 	boolean debugToggle = false;
 	
-
+	Button testButton;
 	private TrueTypeFont font;
 	private int state;
 	
@@ -50,11 +51,26 @@ public class Menu extends BasicGameState implements GameState {
 		Rectangle butt1 = new Rectangle(container.getWidth()/2, container.getHeight()/2, 50, 50);
 		g.fill(butt1);
 		
-		if(butt1.contains((float)input.getMouseY(),(float)(input.getMouseX()))){
+		
+		int mX = input.getMouseX();
+		int mY = input.getMouseY();
+		
+		//System.out.println("min x:" + butt1.getMinX() + " max x:" +butt1.getMaxX() + " min y:" +butt1.getMinY() +" max y:" +butt1.getMaxY());
+
+		if(mX>butt1.getMinX() && mX <butt1.getMaxX() && mY > butt1.getMinY() && mY < butt1.getMaxY()){
+			
+			System.out.println("Over");
+
 			if(input.isMouseButtonDown(0)){
+				
+				System.out.println("Clicked");
+
 				game.enterState(CandyGame.level1);
+				
 			}
 		}
+
+
 	
 		if(debugToggle){
 			drawDebug(container);			
@@ -106,7 +122,7 @@ public class Menu extends BasicGameState implements GameState {
 	public void setState(int state) {
 		this.state = state;
 	}
-	
+
 	
 
 }
